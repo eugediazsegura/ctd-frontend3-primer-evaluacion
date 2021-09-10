@@ -2,10 +2,20 @@
   margin: 0;
   box-sizing: border-box;
   background-color: black;
+  
 }
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
 .layout {
   height: 100vh;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -20,6 +30,10 @@
   align-items: center;
   margin-bottom: 30px;
   color: white;
+}
+
+h1.historia {
+  font-size: 1.8em;
 }
 
 .opciones {

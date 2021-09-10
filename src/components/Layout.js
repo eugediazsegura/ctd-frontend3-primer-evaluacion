@@ -1,63 +1,68 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 import Opciones from './Opciones';
 import Opcion from './Opcion';
+import Historia from './Historia'
 import data from './data.json';
 
 
 class Layout extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = { 
-            contador: 0,
-            estadoAnterior: ""
+        this.state = {
+            contador: 1,
+            opcion: "",
+            id: "1",
+            historialSeleccion: []
         }
 
     }
 
-    clickButton =(e)=>{
-        //console.log(e.target.id);
-        if(e.target.id === "A" && this.state.contador === 0){
-            this.setState({
-                contador: this.state.contador + 1,
-                estadoAnterior: e.target.id
-            })
-        }else if(e.target.id === "B" && this.state.contador === 0 || this.state.estadoAnterior === e.target.id && this.state.contador  != 0){
-            this.setState({
-                contador: this.state.contador + 2,
-                estadoAnterior: e.target.id
-            })
-        }else if(this.state.estadoAnterior != e.target.id && this.state.contador  != 0){
-            this.setState({
-                contador: this.state.contador + 3,
-                estadoAnterior: e.target.id
-            })
+
+    componentDidUpdate(prevProps) {
+        if (this.state.opcion !== prevProps.opcion) {
+            this.state.historialSeleccion.push(this.state.opcion)
         }
-
-        //else if(this.state.estadoAnterior != e.target.id && this.state.contador > 0 )
-        // data.forEach(e => {
-        //     if(e.target.id === "A"){
-        //         this.setState({
-        //           contador: e + 1  
-        //         })
-        //     }else if(e.target.id ==="B"){
-
-        //     }
-
-        // });
     }
 
-    render(){
-        return(
-            <div className="layout">
-                <div style={{color: "white"}}>{this.state.contador}</div>
-                <div style={{color: "white"}}>{this.state.estadoAnterior}</div>
-                <h1 className= "historia"> {data[this.state.contador].historia}</h1>
+
+    clickButton = (e) => {
+        if (this.state.contador <= 4) {
+            this.setState((estadoAnterior) => {
+                const contador = estadoAnterior.contador + 1;
+                return {
+                    contador: contador,
+                    opcion: e.target.id,
+                    id: (contador + e.target.id).toString()
+                }
+            })
+        } else {
+            alert('Fin.');
+        }
+
+    }
+    getElement() {
+
+        return data.find(e => e.id === this.state.id)
+    }
+
+    render() {
+        return (
+            <div className="layout" key={this.state.contador}>
+                <h1 className="historia"> {this.getElement().historia}</h1>
                 <Opciones>
-                    <Opcion click={this.clickButton} label="A" value={data[this.state.contador].opciones.a}/>
-                    <Opcion click={this.clickButton} label="B" value={data[this.state.contador].opciones.b}/>
+                    <Opcion click={this.clickButton} label="a" value={this.getElement().opciones.a} />
+                    <Opcion click={this.clickButton} label="b" value={this.getElement().opciones.b} />
                 </Opciones>
-            
+                <Historia ultimaSeleccion={(this.state.opcion).toUpperCase()}
+                    historialSeleccion={this.state.historialSeleccion.map((item) => {
+                        return <li>{(item).toUpperCase()}</li>
+
+                    })}
+                />
+
             </div>
+
         )
     }
 }
