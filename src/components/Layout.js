@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { CSSTransitionGroup } from 'react-transition-group';
 import Opciones from './Opciones';
 import Opcion from './Opcion';
 import Historia from './Historia'
