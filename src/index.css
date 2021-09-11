@@ -1,9 +1,20 @@
 * {
   margin: 0;
   box-sizing: border-box;
-  background-color: black;
   
 }
+
+.App {
+  filter: invert(1);
+}
+
+body {
+  background-image: url("./outerspace-51.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .example-appear {
   opacity: 0.01;
 }

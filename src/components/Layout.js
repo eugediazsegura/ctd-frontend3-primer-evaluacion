@@ -54,8 +54,8 @@ class Layout extends Component {
                     <Opcion click={this.clickButton} label="b" value={this.getElement().opciones.b} />
                 </Opciones>
                 <Historia ultimaSeleccion={(this.state.opcion).toUpperCase()}
-                    historialSeleccion={this.state.historialSeleccion.map((item) => {
-                        return <li>{(item).toUpperCase()}</li>
+                    historialSeleccion={this.state.historialSeleccion.map((item, index) => {
+                        return <li key={index}>{(item).toUpperCase()}</li>
 
                     })}
                 />
